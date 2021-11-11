@@ -50,5 +50,25 @@ def findMaxSeatId(lines):
             max_seat_id = seat_id
     return max_seat_id
 
+def findMySeat(lines):
+    seat_ids = []
+    for line in lines:
+        row, column = getRowAndColumn(line)
+        seat_id = getSeatId(row, column)
+        seat_ids.append(seat_id)
+    seat_ids.sort()
+    stop = False
+    i = 0
+    while not stop:
+        if seat_ids[i] == (seat_ids[i+1] - 1):
+            i+=1
+        else:
+            stop = True
+            print('found missing seat', seat_ids[i], seat_ids[i+1])
+            return seat_ids[i]+1
 
-print('max seat id is', findMaxSeatId(lines))
+    return 0
+
+# print('max seat id is', findMaxSeatId(lines))
+
+print('my seat id is', findMySeat(lines))
