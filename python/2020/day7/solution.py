@@ -34,7 +34,7 @@ for line in lines:
         parts = kid.strip().split(' ')
         count = parts[0]
         color = parts[1] + ' ' + parts[2]
-        node.children_count[color] = count
+        node.children_count[color] = int(count)
         # if kid doesn't exist create it
         if color not in graph:
             kid_node = graphNode()
@@ -60,9 +60,25 @@ def findAllParents(found_bags, current_bag, graph):
 
     return found_bags
 
-findAllParents(found_bags, 'shiny gold', graph)
+# commented out solution to part 1
+# findAllParents(found_bags, 'shiny gold', graph)
 
-for key in found_bags.keys():
-    print(key)
+# for key in found_bags.keys():
+#     print(key)
 
-print('number of found bags: ', len(found_bags.keys()))
+# print('number of found bags: ', len(found_bags.keys()))
+
+def findChildrenCount(bag_color):
+    count = 0
+    node = graph[bag_color]
+    if len(node.children) == 0:
+        return 0
+    else:
+        for color in node.children.keys():
+            print(color)
+            count += node.children_count[color]
+            count += findChildrenCount(color) * node.children_count[color]
+            print(color, count)
+    return count
+
+print(findChildrenCount('shiny gold'))
