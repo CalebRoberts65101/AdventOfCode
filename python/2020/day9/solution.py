@@ -17,6 +17,7 @@ for i in range(start_size):
     working_list.append(int(lines.pop(0)))
 
 stop = False
+target = 0
 while not stop:
     if len(lines) == 0:
         stop = True
@@ -24,6 +25,7 @@ while not stop:
 
     if not isSum(int(lines[0]), working_list):
         print(int(lines[0]), "is not a sum of previous set")
+        target = int(lines[0])
         stop = True
         break
 
@@ -32,3 +34,27 @@ while not stop:
     working_list.append(int(lines.pop(0)))
 
 print("the end: part 1")
+
+
+with open('python\\2020\day9\data.txt') as f:
+    lines = f.readlines()
+
+nums = []
+for line in lines:
+    nums.append(int(line))
+
+def findSumFirstAndLast(target, nums):
+    for i in range(len(nums)-1):
+        sum = nums[i]
+        for j in range(i+1, len(nums)):
+            sum += nums[j]
+            if sum == target:
+                print("found result")
+                return i,j
+            # exit early since all nums are positive
+            if sum >= target:
+                break
+
+print(findSumFirstAndLast(target, nums))
+# maunally see results and [ab]use min and max to get a simple answer
+print(min(nums[562:578]) + max(nums[562:578]))
